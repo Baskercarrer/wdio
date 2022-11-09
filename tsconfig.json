@@ -1,0 +1,65 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "rootDir": "src",
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "experimentalDecorators": true,
+    "outDir": "build",
+    "module": "CommonJS",
+    "target": "ESNext",
+    "lib": [
+      "ESNext"
+    ],
+    "sourceMap": true,
+    "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "watch": true,
+    "pretty": true,
+    "types": [
+      "node",
+      "webdriverio/async",
+      "expect-webdriverio"
+    ],
+    "allowJs": true,
+    "importHelpers": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@utils/*": [
+        "./utils/*"
+      ],
+      "testContext": [
+        "./context/TestContext"
+      ],
+      "restClient": [
+        "./clients/api/RestClient"
+      ],
+      "uiClient": [
+        "./clients/ui/UiClient"
+      ],
+      "pages": [
+        "./pages/Pages"
+      ],
+      "@app/*": [
+        "./pages/luma/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "ts-node": {
+    "require": [
+      "tsconfig-paths/register"
+    ],
+    "files": true,
+    "transpileOnly": true
+  }
+}
