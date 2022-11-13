@@ -1,4 +1,5 @@
 import { RemoteOptions, remote } from 'webdriverio';
+import { customClick } from '@utils/BrowserUtils';
 
 export default class UiClient {
   private browser: WebdriverIO.Browser;
@@ -13,6 +14,7 @@ export default class UiClient {
 
   async init() {
     this.browser = await remote(this.config);
+    await customClick(this.browser);
   }
 
   async close() {

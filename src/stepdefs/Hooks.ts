@@ -2,7 +2,7 @@ import { After, AfterStep, Before, ITestStepHookParameter, setDefaultTimeout } f
 import Pages from '../pages/Pages';
 import TestContext from 'testContext';
 
-setDefaultTimeout(60000);
+setDefaultTimeout(100000);
 Before({ name: 'Initialize Test context' }, function (this: TestContext) {
   global.testContext = this as TestContext;
 });
