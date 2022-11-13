@@ -1,51 +1,35 @@
-import fs from 'fs/promises';
-
-export interface UiConfig {
-  baseUrl: string;
-  timeout: number;
-  browser?: string;
-  headless?: boolean;
-}
-
-export interface ApiConfig {
-  baseUrl: string;
-  defaultHeaders: Record<string, string>;
-}
-
-interface EnvironmentDetails {
-  uiConfig: UiConfig;
-  apiConfig: ApiConfig;
-}
-
-class Environment {
-  private dev: EnvironmentDetails = {
-    uiConfig: {
-      baseUrl: 'https://magento.softwaretestingboard.com/',
-      timeout: 30000,
-      browser: 'chrome',
-      headless: false,
-    },
-    apiConfig: {
-      baseUrl: 'https://reqres.in/api/',
-      defaultHeaders: { Accept: 'application/json' },
-    },
+import { BrowserStackType } from '../context/TestContext';
+import { RemoteOptions } from 'webdriverio';
+import lodash from 'lodash';
+export function defaultCaps(browserName: string): RemoteOptions {
+  return {
+    logLevel: 'silent',
+    baseUrl: 'https://www.dailymail.co.uk/',
+    waitforTimeout: 30000,
+    automationProtocol: 'webdriver',
+    capabilities: {
+      browserName: browserName ?? 'chrome'
+    }
   };
-  get getApiConfig(): ApiConfig {
-    return this.getEnv.apiConfig;
-  }
-
-  get getEnv(): EnvironmentDetails {
-    return process.env['env']?.toLowerCase() === 'dev' ? this.dev : this.dev;
-  }
-
-  public getUiConfig(browser?: string, headless?: boolean): UiConfig {
-    this.getEnv.uiConfig.browser = browser;
-    this.getEnv.uiConfig.headless = headless;
-    return this.getEnv.uiConfig;
-  }
-
-  async convertVideoToBase64(filePath: string) {
-    return await fs.readFile(filePath, { encoding: 'base64' });
-  }
 }
-export default new Environment();
+export function bsCaps(options: BrowserStackType): RemoteOptions {
+  const dCaps = defaultCaps(options.browserName);
+  dCaps.capabilities = {
+    'bstack:options': {
+      hostname: 'hub.browserstack.com',
+      userName: 'browserStackUsername',
+      accessKey: 'browserStackAccessKey',
+      buildName: `Build_${options.os}_${options.osVersion}_${options.browserName}_${options.browserVersion}`,
+      browserName: options.browserName,
+      browserVersion: options.browserVersion,
+      os: options.os,
+      osVersion: options.osVersion,
+      sessionName: `Session_${options.os}_${options.osVersion}_${options.browserName}_${options.browserVersion}`
+    }
+  };
+  return isRemote() ? dCaps : defaultCaps(options.browserName);
+}
+
+export function isRemote() {
+  return lodash.isUndefined(process.env['remote']) || process.env['remote'].includes('false') ? false : true;
+}

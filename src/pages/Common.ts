@@ -4,6 +4,7 @@ export default class Common {
   }
 
   protected async goTo(path: string) {
+    await this.browser.maximizeWindow();
     await this.browser.url(path);
   }
 }

@@ -14,3 +14,7 @@ When('user clicks on Health tab', async function () {
 Then('video player should be visible', async function () {
   await expect(homepage.videoPlayer).toBeDisplayed();
 });
+
+Then('video player should not be visible', async function () {
+  await expect(homepage.videoPlayer).not.toBeDisplayed();
+});

@@ -1,4 +1,4 @@
-@ui
+@ui @ignore
 Feature: Home page
 
 Business Need: As a user I want check my home page behaviour

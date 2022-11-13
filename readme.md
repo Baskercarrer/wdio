@@ -9,9 +9,9 @@ How to write scenarios:
 Modules involved:
 
 - Cucumber Latest version as a test Runner
-- Playwright Latest version for UI and API components
+- Webdriver IO Latest version for UI and API components
 - Chai for Object level assertion
-- Playwright test used for element level assertion.
+- expect webdriverio test used for element level assertion.
 - ESLint and Prettier for better code style
 
 Recommended Editor:
